@@ -20,7 +20,7 @@ vue-monorepo-template
 │   │   ├── package.json
 │   │   ├── src             # 包源码目录
 │   │   └── tsconfig.json
-│   └── simple              # 📦 包 @vue-monorepo-template/simple
+│ 
 ├── tsconfig.json
 └── website              # 🐝 包实例测试，网站
     ├── README.md
@@ -50,7 +50,6 @@ npm run bootstrap
 ```shell
 npm run build        # 编译所有包 📦 代码
 
-npm run watch:simple # 实时编译 📦 @vue-monorepo-template/simple
 npm run watch:base   # 实时编译 📦 @vue-monorepo-template/base
 ```
 

@@ -1,8 +1,8 @@
 {
-  "name": "@vue-monorepo-template/base",
+  "name": "@vue-pro/search",
   "version": "1.0.0",
-  "description": "base package.",
-  "main": "./cjs/index.js",
+  "description": "vue2",
+  "main": "./cjs/index.vue",
   "module": "./esm/index.js",
   "license": "MIT",
   "files": [
@@ -11,12 +11,15 @@
   ],
   "keywords": [
     "vue",
-    "vue3"
+    "vue2"
   ],
   "peerDependencies": {
-    "vue": ">=3.0.0"
+    "vue": ">=2.0.0",
+    "element-ui": ">=2.15.7"
   },
   "devDependencies": {
-    "vue": "^3.0.0"
+    "vue": "2.6.10",
+    "element-ui": "2.15.7",
+    "moment": "^2.29.1"
   }
 }

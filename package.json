@@ -4,9 +4,8 @@
     "prepare": "husky install",
     "start": "lerna exec \"npm run serve\" --scope website",
     "build:website": "lerna exec \"npm run build\" --scope website",
-    "build": "lerna exec \"tsbb build --use-vue\" --scope @vue-monorepo-template/*",
-    "watch:simple": "lerna exec \"tsbb watch --use-vue\" --scope @vue-monorepo-template/simple",
-    "watch:base": "lerna exec \"tsbb watch --use-vue\" --scope @vue-monorepo-template/base",
+    "build": "lerna exec \"tsbb build --use-vue\" --scope @vue-pro/*",
+    "watch:base": "lerna exec \"tsbb watch --use-vue\" --scope @vue-pro/search",
     "prettier": "prettier --write \"**/*.{js,jsx,vue,tsx,ts,less,md,json}\"",
     "version": "lerna version --exact --force-publish --no-push --no-git-tag-version",
     "clean": "lerna clean --yes",
@@ -17,9 +16,15 @@
   "license": "MIT",
   "devDependencies": {
     "husky": "7.0.4",
+    "lerna": "4.0.0",
     "prettier": "2.5.1",
     "pretty-quick": "3.1.3",
-    "lerna": "4.0.0",
     "tsbb": "^3.5.0"
+  },
+  "workspaces": {
+    "packages": [
+      "website",
+      "packages/*"
+    ]
   }
 }

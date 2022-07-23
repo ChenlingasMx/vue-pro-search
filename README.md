@@ -20,7 +20,7 @@ Simple [`vue 3`](https://v3.vuejs.org/) package development project example temp
 │   │   ├── package.json
 │   │   ├── src             # Package source directory
 │   │   └── tsconfig.json
-│   └── simple              # 📦 package @vue-monorepo-template/simple
+│   
 ├── tsconfig.json
 └── website              # 🐝 Package example test, website
     ├── README.md
@@ -50,7 +50,6 @@ npm run bootstrap
 ```shell
 npm run build        # Compile all packages 📦 code
 
-npm run watch:simple # Real-time compilation 📦 @vue-monorepo-template/simple
 npm run watch:base   # Real-time compilation 📦 @vue-monorepo-template/base
 ```
 
