@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="search-place">
+    <!-- <div class="search-place">
       <div v-show="!show" class="toggle-icon">
         <i class="el-icon-caret-bottom" style="" @click="toggle(true)" />
       </div>
@@ -9,21 +9,25 @@
           <i class="el-icon-caret-top" @click="toggle(false)" />
         </div>
       </transition>
-    </div>
+    </div> -->
     <primary-items
-      v-if="show"
       :searchDatas="searchDatas"
       :items="items"
       :label-position="labelPosition"
       :label-width="labelWidth"
-    />
-    <simple-items
+      @search="() => $emit('search', searchDatas)"
+    >
+      <div v-for="(v, i) in getSlots" :key="i" :slot="v">
+        <slot :name="v" />
+      </div>
+    </primary-items>
+    <!-- <simple-items
       v-else
       :searchDatas="searchDatas"
       :items="items"
       :label-position="labelPosition"
       :label-width="labelWidth"
-    />
+    /> -->
   </div>
 </template>
 
@@ -56,7 +60,6 @@ export default {
       default: 90,
     },
   },
-  // mixins: [store],
   data() {
     return {
       searchDatas: {},
@@ -66,9 +69,14 @@ export default {
   watch: {
     dataSource: {
       handler(val) {
-        this.searchDatas = val || {};
+        this.searchDatas = { ...val };
       },
       deep: true,
+    },
+  },
+  computed: {
+    getSlots() {
+      return this.items.filter((item) => item.type === 'render').map((item) => item.slot);
     },
   },
   methods: {

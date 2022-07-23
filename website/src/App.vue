@@ -1,6 +1,9 @@
 <template>
   <div>
-    <pro-search :items="searchItems" :data-source="info" />
+    <!-- 2: {{ info }} -->
+    <pro-search :items="searchItems" :data-source="info" @search="onSearch">
+      <template slot="aaa"> aaabbb </template>
+    </pro-search>
   </div>
 </template>
 <script>
@@ -22,6 +25,7 @@ export default {
           type: 'input',
           label: '公司',
           prop: 'clueName',
+          clearable: true,
         },
         {
           type: 'input',
@@ -32,9 +36,24 @@ export default {
           type: 'select',
           label: '跟进状态',
           prop: 'followStatus',
-          options: [{ label: '确定', value: 1 }],
+          options: [{ label: '确定', value: '1' }],
+        },
+        {
+          type: 'dateRange',
+          label: '创建时间',
+          prop: 'createDate',
+        },
+        {
+          type: 'render',
+          label: '时间',
+          slot: 'aaa',
         },
       ];
+    },
+  },
+  methods: {
+    onSearch(d) {
+      this.info = d;
     },
   },
 };
