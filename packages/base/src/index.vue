@@ -2,7 +2,7 @@
   <div>
     <div class="search-place">
       <div v-show="!show" class="toggle-icon">
-        <i class="el-icon-caret-bottom" @click="toggle(true)" />
+        <i class="el-icon-caret-bottom" style="" @click="toggle(true)" />
       </div>
       <transition name="el-zoom-in-top">
         <div v-show="show" style="position: relative">

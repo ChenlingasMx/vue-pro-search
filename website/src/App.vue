@@ -1,10 +1,10 @@
 <template>
   <div>
-    <pro-search :items="searchItems" :data-source="dataSource" />
+    <pro-search :items="searchItems" :data-source="info" />
   </div>
 </template>
 <script>
-import ProSearch from '@vue-pro/search';
+import ProSearch from 'vue-pro-search';
 export default {
   name: 'App',
   components: {
@@ -12,7 +12,7 @@ export default {
   },
   data() {
     return {
-      dataSource: {},
+      info: {},
     };
   },
   computed: {

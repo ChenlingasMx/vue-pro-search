@@ -1,1 +1,1 @@
-@vue-pro/search
+vue-pro-search

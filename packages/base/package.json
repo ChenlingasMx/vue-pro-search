@@ -1,12 +1,12 @@
 {
-  "name": "@vue-pro/search",
+  "name": "vue-pro-search",
   "version": "1.0.2",
   "description": "vue2",
-  "main": "./cjs/index.vue",
-  "module": "./esm/index.js",
+  "main": "./lib/index.vue",
+  "module": "./esm/index.vue",
   "license": "MIT",
   "files": [
-    "cjs",
+    "lib",
     "esm"
   ],
   "keywords": [
