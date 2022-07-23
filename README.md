@@ -1,10 +1,10 @@
-vue-monorepo-template
+vue-pro-search
 ===
 
 [![Downloads](https://img.shields.io/static/v1?label=Github&message=repo&color=green&style=flat&logo=github)](https://github.com/tsbbjs/vue-monorepo-template)
 [![Build & Deploy](https://github.com/tsbbjs/vue-monorepo-template/actions/workflows/ci.yml/badge.svg)](https://github.com/tsbbjs/vue-monorepo-template/actions/workflows/ci.yml)
 
-Simple [`vue 3`](https://v3.vuejs.org/) package development project example template.
+Simple [`vue 2`](https://v2.vuejs.org/) package development project example template.
 
 ### Directory Structure
 
