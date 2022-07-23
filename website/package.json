@@ -27,7 +27,8 @@
     "eslint-plugin-vue": "6.2.2",
     "raw-loader": "4.0.2",
     "sass-loader": "8.0.2",
-    "source-map-explorer": "2.5.2"
+    "source-map-explorer": "2.5.2",
+    "moment": "^2.29.1"
   },
   "keywords": [
     "vue",
