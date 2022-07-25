@@ -91,7 +91,6 @@
           </div>
         </el-dropdown-menu>
       </el-dropdown>
-      <span v-if="JSON.stringify(searchDatas) !== '{}'" class="clear">清除筛选</span>
     </div>
   </div>
 </template>
@@ -161,12 +160,6 @@ export default {
   cursor: pointer;
   margin: 0 14.5px;
   font-size: 14px;
-}
-.clear {
-  margin: 0 10px;
-  font-size: 14px;
-  cursor: pointer;
-  color: #348fe4;
 }
 .filter-param {
   padding: 10px;

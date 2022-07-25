@@ -1,15 +1,11 @@
 <template>
   <div>
-    <!-- <div class="search-place">
-      <div v-show="!show" class="toggle-icon">
-        <i class="el-icon-caret-bottom" style="" @click="toggle(true)" />
-      </div>
-      <transition name="el-zoom-in-top">
-        <div v-show="show" style="position: relative">
-          <i class="el-icon-caret-top" @click="toggle(false)" />
-        </div>
-      </transition>
-    </div> -->
+    <div class="search-place">
+      <!-- <div class="toggle-icon">
+        <i :class="!show?'el-icon-caret-bottom':'el-icon-caret-top'" style="" @click="toggle(!show)" />
+      </div> -->
+      <span class="clear" @click="clear">清除筛选</span>
+    </div>
     <primary-items
       :searchDatas="searchDatas"
       :items="items"
@@ -93,6 +89,10 @@ export default {
     toggle(value) {
       this.show = value;
     },
+    clear() {
+      this.searchDatas = {};
+      this.$emit('clear', this.searchDatas);
+    },
   },
 };
 </script>
@@ -120,5 +120,15 @@ i {
   position: absolute;
   right: 0;
   z-index: 999;
+}
+.clear {
+  position: absolute;
+  text-align: center;
+  right: 18px;
+  top: 0;
+  margin: 0 10px;
+  font-size: 14px;
+  cursor: pointer;
+  color: #348fe4;
 }
 </style>
