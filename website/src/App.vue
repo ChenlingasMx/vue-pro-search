@@ -1,10 +1,9 @@
 <template>
-  <div>
-    <!-- 2: {{ info }} -->
+  <el-card>
     <pro-search :items="searchItems" :data-source="info" @search="onSearch">
       <template slot="aaa"> aaabbb </template>
     </pro-search>
-  </div>
+  </el-card>
 </template>
 <script>
 import ProSearch from 'vue-pro-search';
@@ -47,6 +46,15 @@ export default {
           type: 'render',
           label: '时间',
           slot: 'aaa',
+        },
+        {
+          type: 'radio',
+          label: '水果',
+          prop: 'fruit',
+          options: [
+            { label: '苹果', value: 'apple' },
+            { label: '梨子', value: 'pear' },
+          ],
         },
       ];
     },

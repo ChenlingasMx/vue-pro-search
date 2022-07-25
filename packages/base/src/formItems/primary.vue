@@ -12,7 +12,7 @@
           <el-col :span="4">
             <el-input
               v-model="searchDatas[item.prop]"
-              size="small"
+              :size="size"
               :placeholder="item.placeholder || `请输入${item.label}`"
               :clearable="item.clearable"
               @keyup.enter.native="() => $emit('search')"
@@ -23,6 +23,7 @@
         <template v-if="item.type === 'autocomplete'">
           <el-col :span="4">
             <el-autocomplete
+              :size="size"
               v-model="searchDatas[item.prop]"
               :style="{ width: '100%' }"
               clearable
@@ -36,7 +37,7 @@
           <el-col :span="4">
             <el-select
               v-model="searchDatas[item.prop]"
-              size="small"
+              :size="size"
               style="width: 100%"
               :placeholder="item.placeholder || `请选择${item.label}`"
               :clearable="item.clearable"
@@ -52,14 +53,24 @@
             </el-select>
           </el-col>
         </template>
-        <template v-if="item.type === 'checkBox'">
+        <template v-if="item.type === 'radio'">
           <el-col :span="24">
-            <CheckBox v-model="searchDatas[item.prop]" @change="() => $emit('search')" :options="item.options" />
+            <RadioBox v-model="searchDatas[item.prop]" @change="() => $emit('search')" :options="item.options" />
           </el-col>
         </template>
         <template v-if="item.type === 'dateRange'">
-          <el-col :span="24">
-            <DateRange v-model="searchDatas[item.prop]" @change="() => $emit('search')" />
+          <el-col :span="4">
+            <el-date-picker
+              :size="size"
+              v-model="searchDatas[item.prop]"
+              :style="{ width: '100%' }"
+              type="daterange"
+              value-format="yyyy-MM-dd"
+              start-placeholder="开始时间"
+              end-placeholder="结束时间"
+              placeholder="请选择创建时间"
+            />
+            <!-- <DateRange v-model="searchDatas[item.prop]" @change="() => $emit('search')" /> -->
           </el-col>
         </template>
         <template v-if="item.type === 'render'">
@@ -69,13 +80,13 @@
         </template>
       </el-form-item>
     </el-row>
-    <div style="border-top: 1px solid #dcdfe6; padding-top: 10px">
+    <div style="border-top: 1px solid #dcdfe6; padding: 10px 0 20px 0">
       <el-col :span="24">
         <el-input
           prefix-icon="el-icon-search"
           v-model="searchDatas['search']"
           class="no-border"
-          size="small"
+          :size="size"
           :placeholder="'请输入关键字，按Enter搜索'"
           clearable
           @keyup.enter.native="() => $emit('search')"
@@ -87,16 +98,16 @@
 </template>
 
 <script>
-import CheckBox from '../components/checkbox.vue';
+import RadioBox from '../components/radioBox.vue';
 import Select from '../components/select.vue';
-import DateRange from '../components/dateRange.vue';
+// import DateRange from '../components/dateRange.vue';
 
 export default {
   name: 'ProSearch',
   components: {
-    CheckBox,
+    RadioBox,
     Select,
-    DateRange,
+    // DateRange,
   },
   props: {
     // 搜索数据
@@ -116,6 +127,10 @@ export default {
     labelWidth: {
       type: Number,
       default: 100,
+    },
+    size: {
+      type: String,
+      default: 'small',
     },
   },
   watch: {},

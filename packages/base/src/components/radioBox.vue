@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  name: 'CheckBox',
+  name: 'RadioBox',
   components: {},
   props: {
     value: {

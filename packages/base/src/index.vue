@@ -15,6 +15,7 @@
       :items="items"
       :label-position="labelPosition"
       :label-width="labelWidth"
+      :size="size"
       @search="() => $emit('search', searchDatas)"
     >
       <div v-for="(v, i) in getSlots" :key="i" :slot="v">
@@ -27,7 +28,12 @@
       :items="items"
       :label-position="labelPosition"
       :label-width="labelWidth"
-    /> -->
+      :size="size"
+    >
+      <div v-for="(v, i) in getSlots" :key="i" :slot="v">
+        <slot :name="v" />
+      </div>
+    </simple-items> -->
   </div>
 </template>
 
@@ -58,6 +64,10 @@ export default {
     labelWidth: {
       type: Number,
       default: 90,
+    },
+    size: {
+      type: String,
+      default: 'small',
     },
   },
   data() {
