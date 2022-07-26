@@ -1,109 +1,92 @@
 <template>
   <el-form
     ref="formRef"
-    :model="searchDatas"
+    :model="dataSource"
     :label-position="labelPosition"
     :label-width="labelWidth + 'px'"
     @submit.native.prevent
   >
-    <el-row v-for="item in items" :key="item.prop">
+    <el-row v-for="item in items" :key="item.prop" :style="{ maxWidth: labelMaxWidth }">
       <el-form-item :label="item.label" :prop="item.prop">
         <template v-if="item.type === 'input'" style="width: 100%">
-          <el-col :span="4">
-            <el-input
-              v-model="searchDatas[item.prop]"
-              :size="size"
-              :placeholder="item.placeholder || `请输入${item.label}`"
-              :clearable="item.clearable"
-              @keyup.enter.native="() => $emit('search')"
-              @change="item.events && item.events.change && item.events.change($event)"
-              @input="item.events && item.events.input && item.events.input($event)"
-            />
-          </el-col>
+          <el-input
+            v-model="dataSource[item.prop]"
+            :size="size"
+            :placeholder="item.placeholder || `请输入${item.label}`"
+            :clearable="item.clearable"
+            @change="item.events && item.events.change && item.events.change($event)"
+            @input="item.events && item.events.input && item.events.input($event)"
+          />
         </template>
         <template v-if="item.type === 'autocomplete'">
-          <el-col :span="4">
-            <el-autocomplete
-              :size="size"
-              v-model="searchDatas[item.prop]"
-              :style="{ width: '100%' }"
-              clearable
-              :fetch-suggestions="item.querySearchAsync"
-              :placeholder="item.placeholder || `请输入${item.label}`"
-              @change="item.events && item.events.change && item.events.change($event)"
-              @focus="item.events && item.events.focus && item.events.focus($event)"
-            />
-          </el-col>
+          <el-autocomplete
+            :size="size"
+            v-model="dataSource[item.prop]"
+            :style="{ width: '100%' }"
+            clearable
+            :fetch-suggestions="item.querySearchAsync"
+            :placeholder="item.placeholder || `请输入${item.label}`"
+            @change="item.events && item.events.change && item.events.change($event)"
+            @focus="item.events && item.events.focus && item.events.focus($event)"
+          />
         </template>
         <template v-if="item.type === 'select'">
-          <el-col :span="4">
-            <el-select
-              v-model="searchDatas[item.prop]"
-              :size="size"
-              style="width: 100%"
-              :placeholder="item.placeholder || `请选择${item.label}`"
-              :clearable="item.clearable"
-              :filterable="item.filterable"
-              :remote="item.remote"
-              :disabled="item.disabled"
-              :multiple="item.multiple"
-              :value-key="item.valueKey ? item.valueKey : 'value'"
-              :collapse-tags="item.collapseTags"
-              :loading="item.loading"
-              @change="item.events && item.events.change && item.events.change($event)"
-              @focus="item.events && item.events.focus && item.events.focus($event)"
-            >
-              <el-option
-                v-for="option in item.options"
-                :key="option.value"
-                :label="option.label"
-                :value="option.value"
-              />
-            </el-select>
-          </el-col>
+          <el-select
+            v-model="dataSource[item.prop]"
+            :size="size"
+            style="width: 100%"
+            :placeholder="item.placeholder || `请选择${item.label}`"
+            :clearable="item.clearable"
+            :filterable="item.filterable"
+            :remote="item.remote"
+            :disabled="item.disabled"
+            :multiple="item.multiple"
+            :value-key="item.valueKey ? item.valueKey : 'value'"
+            :collapse-tags="item.collapseTags"
+            :loading="item.loading"
+            @change="item.events && item.events.change && item.events.change($event)"
+            @focus="item.events && item.events.focus && item.events.focus($event)"
+          >
+            <el-option v-for="option in item.options" :key="option.value" :label="option.label" :value="option.value" />
+          </el-select>
         </template>
         <template v-if="item.type === 'radio'">
-          <el-col :span="24">
-            <RadioBox v-model="searchDatas[item.prop]" @change="() => $emit('search')" :options="item.options" />
-          </el-col>
+          <RadioBox
+            v-model="dataSource[item.prop]"
+            @change="item.events && item.events.change && item.events.change($event)"
+            :options="item.options"
+          />
         </template>
         <template v-if="item.type === 'datePicker' || item.type === 'time' || item.type === 'date'">
-          <el-col :span="4">
-            <el-date-picker
-              v-model="searchDatas[item.prop]"
-              :size="size"
-              :disabled="item.disabled"
-              :style="{ width: '100%' }"
-              :type="item.dataType || 'date'"
-              :value-format="item.format || 'yyyy-MM-dd'"
-              :format="item.format || 'yyyy-MM-dd'"
-              :placeholder="item.placeholder || `请选择${item.label}`"
-              :picker-options="item.pickerOptions || { firstDayOfWeek: 1 }"
-              @change="item.events && item.events.change && item.events.change($event)"
-            />
-          </el-col>
+          <el-date-picker
+            v-model="dataSource[item.prop]"
+            :size="size"
+            :disabled="item.disabled"
+            :style="{ width: '100%' }"
+            :type="item.dataType || 'date'"
+            :value-format="item.format || 'yyyy-MM-dd'"
+            :format="item.format || 'yyyy-MM-dd'"
+            :placeholder="item.placeholder || `请选择${item.label}`"
+            :picker-options="item.pickerOptions || { firstDayOfWeek: 1 }"
+            @change="item.events && item.events.change && item.events.change($event)"
+          />
         </template>
         <template v-if="item.type === 'dateRange'">
-          <el-col :span="4">
-            <el-date-picker
-              v-model="searchDatas[item.prop]"
-              :size="size"
-              :style="{ width: '100%' }"
-              type="daterange"
-              :value-format="item.format || 'yyyy-MM-dd'"
-              :format="item.format || 'yyyy-MM-dd'"
-              start-placeholder="开始时间"
-              end-placeholder="结束时间"
-              placeholder="请选择创建时间"
-              @change="item.events && item.events.change && item.events.change($event)"
-            />
-            <!-- <DateRange v-model="searchDatas[item.prop]" @change="() => $emit('search')" /> -->
-          </el-col>
+          <el-date-picker
+            v-model="dataSource[item.prop]"
+            :size="size"
+            :style="{ width: '100%' }"
+            type="daterange"
+            :value-format="item.format || 'yyyy-MM-dd'"
+            :format="item.format || 'yyyy-MM-dd'"
+            start-placeholder="开始时间"
+            end-placeholder="结束时间"
+            placeholder="请选择创建时间"
+            @change="item.events && item.events.change && item.events.change($event)"
+          />
         </template>
         <template v-if="item.type === 'render'">
-          <el-col :span="24">
-            <slot :name="item.slot" />
-          </el-col>
+          <slot :name="item.slot" />
         </template>
       </el-form-item>
     </el-row>
@@ -122,7 +105,7 @@ export default {
   },
   props: {
     // 搜索数据
-    searchDatas: {
+    dataSource: {
       type: Object,
       default: () => {},
     },
@@ -134,6 +117,10 @@ export default {
     labelPosition: {
       type: String,
       default: 'left',
+    },
+    labelMaxWidth: {
+      type: String,
+      default: '300px',
     },
     labelWidth: {
       type: Number,

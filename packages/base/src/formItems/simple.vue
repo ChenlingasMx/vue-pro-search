@@ -7,31 +7,22 @@
         :key="index"
         class="filter-item"
         @click="handel(item)"
-        @visible-change="close"
       >
         <span>
           <span>{{ item.label }}：</span>
-          <span>{{
-            handleValue({
-              type: item.type,
-              value: searchDatas[item.prop],
-              formart: item.formart,
-              options: item.options,
-            })
-          }}</span>
+          <span style="color: #4f566a">{{ item.type === 'render' ? item.renderValue : handleValue(item) }}</span>
           <i class="el-icon-caret-bottom" />
         </span>
         <el-dropdown-menu slot="dropdown">
           <div class="filter-param">
-            <el-form :model="searchDatas" :label-position="labelPosition" :label-width="labelWidth + 'px'">
+            <el-form :model="dataSource" :label-position="labelPosition" :label-width="labelWidth + 'px'">
               <el-form-item :label="item.label" :prop="item.prop">
                 <template v-if="item.type === 'input'" style="width: 100%">
                   <el-input
-                    v-model="searchDatas[item.prop]"
+                    v-model="dataSource[item.prop]"
                     :size="size"
                     :placeholder="item.placeholder || `请输入${item.label}`"
                     :clearable="item.clearable"
-                    @keyup.enter.native="() => $emit('search')"
                     @change="item.events && item.events.change && item.events.change($event)"
                     @input="item.events && item.events.input && item.events.input($event)"
                   />
@@ -39,7 +30,7 @@
                 <template v-if="item.type === 'autocomplete'">
                   <el-autocomplete
                     :size="size"
-                    v-model="searchDatas[item.prop]"
+                    v-model="dataSource[item.prop]"
                     :style="{ width: '100%' }"
                     clearable
                     :fetch-suggestions="item.querySearchAsync"
@@ -50,7 +41,7 @@
                 </template>
                 <template v-if="item.type === 'select'">
                   <el-select
-                    v-model="searchDatas[item.prop]"
+                    v-model="dataSource[item.prop]"
                     :size="size"
                     style="width: 100%"
                     :placeholder="item.placeholder || `请选择${item.label}`"
@@ -75,7 +66,7 @@
                 </template>
                 <template v-if="item.type === 'radio'">
                   <el-radio
-                    v-model="searchDatas[item.prop]"
+                    v-model="dataSource[item.prop]"
                     :size="size"
                     v-for="(value, index) in item.options"
                     :key="index"
@@ -89,7 +80,7 @@
                 </template>
                 <template v-if="item.type === 'datePicker' || item.type === 'time' || item.type === 'date'">
                   <el-date-picker
-                    v-model="searchDatas[item.prop]"
+                    v-model="dataSource[item.prop]"
                     :disabled="item.disabled"
                     :size="size"
                     :style="{ width: '100%' }"
@@ -103,7 +94,7 @@
                 </template>
                 <template v-if="item.type === 'dateRange'">
                   <el-date-picker
-                    v-model="searchDatas[item.prop]"
+                    v-model="dataSource[item.prop]"
                     :size="size"
                     :style="{ width: '100%' }"
                     type="daterange"
@@ -116,9 +107,7 @@
                   />
                 </template>
                 <template v-if="item.type === 'render'">
-                  <el-col :span="24">
-                    <slot :name="item.slot" />
-                  </el-col>
+                  <slot :name="item.slot" />
                 </template>
               </el-form-item>
             </el-form>
@@ -139,7 +128,7 @@ export default {
   },
   props: {
     // 搜索数据
-    searchDatas: {
+    dataSource: {
       type: Object,
       default: () => {},
     },
@@ -155,6 +144,10 @@ export default {
     labelWidth: {
       type: Number,
       default: 100,
+    },
+    labelMaxWidth: {
+      type: String,
+      default: '300px',
     },
     size: {
       type: String,
@@ -173,17 +166,15 @@ export default {
       this.showFilterBox = true;
       this.item = item;
     },
-    close(value) {
-      if (!value) this.$emit('search');
-    },
-    handleValue({ type, value, formart = 'YYYY-MM-DD', options = [] }) {
+    handleValue({ type, prop, formart = 'YYYY-MM-DD', options = [], multiple }) {
+      let value = this.dataSource[prop];
       let content;
       if (type === 'input' || type === 'textarea' || type === 'number') {
         content = value || '';
       }
       if (type === 'radio' || type === 'select') {
         // 多选
-        if (value && options && options.length > 0 && item.multiple) {
+        if (value && options && options.length > 0 && multiple) {
           for (const itm of options) {
             if (value.includes(itm.value)) content += `${itm.label}`;
           }

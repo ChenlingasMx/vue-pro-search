@@ -1,6 +1,7 @@
 <template>
   <div>
     <div class="search-place">
+      <span class="clear" @click="search"><i class="el-icon-search" />搜索</span>
       <span class="clear" @click="clear">清除筛选</span>
       <div v-if="showChangeBtn" class="toggle-icon">
         <i :class="!show ? 'el-icon-caret-bottom' : 'el-icon-caret-top'" @click="toggle(!show)" />
@@ -8,12 +9,12 @@
     </div>
     <primary-items
       v-if="show"
-      :searchDatas="searchDatas"
+      :dataSource="dataSource"
       :items="items"
       :label-position="labelPosition"
       :label-width="labelWidth"
+      :labelMaxWidth="labelMaxWidth"
       :size="size"
-      @search="() => $emit('search', searchDatas)"
     >
       <div v-for="(v, i) in getSlots" :key="i" :slot="v">
         <slot :name="v" />
@@ -21,12 +22,12 @@
     </primary-items>
     <simple-items
       v-else
-      :searchDatas="searchDatas"
+      :dataSource="dataSource"
       :items="items"
       :label-position="labelPosition"
       :label-width="labelWidth"
+      :labelMaxWidth="labelMaxWidth"
       :size="size"
-      @search="() => $emit('search', searchDatas)"
     >
       <div v-for="(v, i) in getSlots" :key="i" :slot="v">
         <slot :name="v" />
@@ -36,13 +37,13 @@
       <el-col :span="24">
         <el-input
           prefix-icon="el-icon-search"
-          v-model="searchDatas['search']"
+          v-model="dataSource['search']"
           class="no-border"
           :size="size"
           :placeholder="'请输入关键字，按Enter搜索'"
           clearable
-          @keyup.enter.native="() => $emit('search', searchDatas)"
-          @clear="() => $emit('search', searchDatas)"
+          @keyup.enter.native="() => $emit('search')"
+          @clear="() => $emit('search')"
         />
       </el-col>
     </div>
@@ -77,6 +78,10 @@ export default {
       type: Number,
       default: 90,
     },
+    labelMaxWidth: {
+      type: String,
+      default: '400px',
+    },
     size: {
       type: String,
       default: 'small',
@@ -85,19 +90,22 @@ export default {
       type: Boolean,
       default: true,
     },
+    color: {
+      type: String,
+      default: '#348fe4',
+    },
   },
   data() {
     return {
-      searchDatas: {},
       show: true,
     };
   },
   watch: {
-    dataSource: {
-      handler(val) {
-        this.searchDatas = { ...val };
+    color: {
+      handler(v) {
+        document.documentElement.style.setProperty('--pro-search-color', v);
       },
-      deep: true,
+      immediate: true,
     },
   },
   computed: {
@@ -109,9 +117,11 @@ export default {
     toggle(value) {
       this.show = value;
     },
+    search() {
+      this.$emit('search');
+    },
     clear() {
-      this.searchDatas = {};
-      this.$emit('clear', this.searchDatas);
+      this.$emit('clear');
     },
   },
 };
@@ -121,34 +131,37 @@ export default {
 .search-place {
   position: relative;
   min-height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
-.toggle-icon {
-  position: absolute;
-  right: 78px;
-  top: 0;
-  text-align: right;
-  padding-bottom: 10px;
+.search-place .clear {
+  text-align: center;
+  margin: 0 10px;
+  font-size: 15px;
+  cursor: pointer;
+  color: var(--pro-search-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.search-place .clear i {
+  margin-right: 3px;
+}
+.search-place .toggle-icon {
   box-sizing: border-box;
-  z-index: 999;
+  width: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-i {
-  color: #348fe4;
+.search-place .toggle-icon i {
+  color: var(--pro-search-color);
+  font-size: 20px;
 }
 .el-icon-caret-top {
   font-size: 20px;
-  color: #348fe4;
-  position: absolute;
-  right: 0;
+  color: var(--pro-search-color);
   z-index: 999;
-}
-.clear {
-  position: absolute;
-  text-align: center;
-  right: 0px;
-  top: 0;
-  margin: 0 10px;
-  font-size: 14px;
-  cursor: pointer;
-  color: #348fe4;
 }
 </style>
