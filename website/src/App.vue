@@ -1,7 +1,11 @@
 <template>
   <el-card>
     <pro-search :items="searchItems" :data-source="info" @search="onSearch" @clear="clear">
-      <template slot="aaa"> aaabbb </template>
+      <template v-for="(v, i) in renderColumns">
+        <div :key="i" :slot="v.slot">
+          <el-input v-model="info[v.prop]" />
+        </div>
+      </template>
     </pro-search>
   </el-card>
 </template>
@@ -14,7 +18,10 @@ export default {
   },
   data() {
     return {
-      info: {},
+      info: {
+        a: '111',
+        b: '222',
+      },
     };
   },
   computed: {
@@ -51,6 +58,13 @@ export default {
           type: 'render',
           label: '时间',
           slot: 'aaa',
+          prop: 'a',
+        },
+        {
+          type: 'render',
+          label: '时间2',
+          slot: 'bbb',
+          prop: 'b',
         },
         {
           type: 'radio',
@@ -62,6 +76,9 @@ export default {
           ],
         },
       ];
+    },
+    renderColumns() {
+      return this.searchItems.filter((item) => item.type === 'render').map((item) => ({ ...item }));
     },
   },
   methods: {

@@ -89,7 +89,7 @@ export default {
   data() {
     return {
       searchDatas: {},
-      show: false,
+      show: true,
     };
   },
   watch: {
