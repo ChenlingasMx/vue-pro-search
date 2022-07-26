@@ -1,12 +1,13 @@
 <template>
   <div>
     <div class="search-place">
-      <!-- <div class="toggle-icon">
-        <i :class="!show?'el-icon-caret-bottom':'el-icon-caret-top'" style="" @click="toggle(!show)" />
-      </div> -->
       <span class="clear" @click="clear">清除筛选</span>
+      <div v-if="showChangeBtn" class="toggle-icon">
+        <i :class="!show ? 'el-icon-caret-bottom' : 'el-icon-caret-top'" @click="toggle(!show)" />
+      </div>
     </div>
     <primary-items
+      v-if="show"
       :searchDatas="searchDatas"
       :items="items"
       :label-position="labelPosition"
@@ -18,18 +19,33 @@
         <slot :name="v" />
       </div>
     </primary-items>
-    <!-- <simple-items
+    <simple-items
       v-else
       :searchDatas="searchDatas"
       :items="items"
       :label-position="labelPosition"
       :label-width="labelWidth"
       :size="size"
+      @search="() => $emit('search', searchDatas)"
     >
       <div v-for="(v, i) in getSlots" :key="i" :slot="v">
         <slot :name="v" />
       </div>
-    </simple-items> -->
+    </simple-items>
+    <div style="border-top: 1px solid #dcdfe6; padding: 10px 0 20px 0">
+      <el-col :span="24">
+        <el-input
+          prefix-icon="el-icon-search"
+          v-model="searchDatas['search']"
+          class="no-border"
+          :size="size"
+          :placeholder="'请输入关键字，按Enter搜索'"
+          clearable
+          @keyup.enter.native="() => $emit('search', searchDatas)"
+          @clear="() => $emit('search', searchDatas)"
+        />
+      </el-col>
+    </div>
   </div>
 </template>
 
@@ -64,6 +80,10 @@ export default {
     size: {
       type: String,
       default: 'small',
+    },
+    showChangeBtn: {
+      type: Boolean,
+      default: true,
     },
   },
   data() {
@@ -104,7 +124,7 @@ export default {
 }
 .toggle-icon {
   position: absolute;
-  right: 0;
+  right: 78px;
   top: 0;
   text-align: right;
   padding-bottom: 10px;
@@ -124,7 +144,7 @@ i {
 .clear {
   position: absolute;
   text-align: center;
-  right: 18px;
+  right: 0px;
   top: 0;
   margin: 0 10px;
   font-size: 14px;

@@ -7,10 +7,18 @@
         :key="index"
         class="filter-item"
         @click="handel(item)"
+        @visible-change="close"
       >
         <span>
           <span>{{ item.label }}：</span>
-          <span>{{ searchDatas[item.prop] || '' }}</span>
+          <span>{{
+            handleValue({
+              type: item.type,
+              value: searchDatas[item.prop],
+              formart: item.formart,
+              options: item.options,
+            })
+          }}</span>
           <i class="el-icon-caret-bottom" />
         </span>
         <el-dropdown-menu slot="dropdown">
@@ -24,7 +32,8 @@
                     :placeholder="item.placeholder || `请输入${item.label}`"
                     :clearable="item.clearable"
                     @keyup.enter.native="() => $emit('search')"
-                    @clear="() => $emit('search')"
+                    @change="item.events && item.events.change && item.events.change($event)"
+                    @input="item.events && item.events.input && item.events.input($event)"
                   />
                 </template>
                 <template v-if="item.type === 'autocomplete'">
@@ -35,7 +44,8 @@
                     clearable
                     :fetch-suggestions="item.querySearchAsync"
                     :placeholder="item.placeholder || `请输入${item.label}`"
-                    @change="() => $emit('search')"
+                    @change="item.events && item.events.change && item.events.change($event)"
+                    @focus="item.events && item.events.focus && item.events.focus($event)"
                   />
                 </template>
                 <template v-if="item.type === 'select'">
@@ -45,8 +55,15 @@
                     style="width: 100%"
                     :placeholder="item.placeholder || `请选择${item.label}`"
                     :clearable="item.clearable"
-                    @change="() => $emit('search')"
-                    @clear="() => $emit('search')"
+                    :filterable="item.filterable"
+                    :remote="item.remote"
+                    :disabled="item.disabled"
+                    :multiple="item.multiple"
+                    :value-key="item.valueKey ? item.valueKey : 'value'"
+                    :collapse-tags="item.collapseTags"
+                    :loading="item.loading"
+                    @change="item.events && item.events.change && item.events.change($event)"
+                    @focus="item.events && item.events.focus && item.events.focus($event)"
                   >
                     <el-option
                       v-for="option in item.options"
@@ -65,9 +82,24 @@
                     style="line-height: 24px"
                     :disabled="item.disabled"
                     :label="value.value"
+                    @change="item.events && item.events.change && item.events.change($event)"
                   >
                     {{ value.label }}
                   </el-radio>
+                </template>
+                <template v-if="item.type === 'datePicker' || item.type === 'time' || item.type === 'date'">
+                  <el-date-picker
+                    v-model="searchDatas[item.prop]"
+                    :disabled="item.disabled"
+                    :size="size"
+                    :style="{ width: '100%' }"
+                    :type="item.dataType || 'date'"
+                    :value-format="item.format || 'yyyy-MM-dd'"
+                    :format="item.format || 'yyyy-MM-dd'"
+                    :placeholder="item.placeholder || `请选择${item.label}`"
+                    :picker-options="item.pickerOptions || { firstDayOfWeek: 1 }"
+                    @change="item.events && item.events.change && item.events.change($event)"
+                  />
                 </template>
                 <template v-if="item.type === 'dateRange'">
                   <el-date-picker
@@ -75,10 +107,12 @@
                     :size="size"
                     :style="{ width: '100%' }"
                     type="daterange"
-                    value-format="yyyy-MM-dd"
+                    :value-format="item.format || 'yyyy-MM-dd'"
+                    :format="item.format || 'yyyy-MM-dd'"
                     start-placeholder="开始时间"
                     end-placeholder="结束时间"
                     placeholder="请选择创建时间"
+                    @change="item.events && item.events.change && item.events.change($event)"
                   />
                 </template>
                 <template v-if="item.type === 'render'">
@@ -97,6 +131,7 @@
 <script>
 import CheckBox from '../components/radioBox.vue';
 import DateRange from '../components/dateRange.vue';
+import moment from 'moment';
 export default {
   components: {
     CheckBox,
@@ -137,6 +172,48 @@ export default {
     handel(item) {
       this.showFilterBox = true;
       this.item = item;
+    },
+    close(value) {
+      if (!value) this.$emit('search');
+    },
+    handleValue({ type, value, formart = 'YYYY-MM-DD', options = [] }) {
+      let content;
+      if (type === 'input' || type === 'textarea' || type === 'number') {
+        content = value || '';
+      }
+      if (type === 'radio' || type === 'select') {
+        // 多选
+        if (value && options && options.length > 0 && item.multiple) {
+          for (const itm of options) {
+            if (value.includes(itm.value)) content += `${itm.label}`;
+          }
+          // 单选
+        } else if (value && options && options.length > 0) {
+          const { label } = options.find((item) => item.value === value) || {};
+          content = label || '';
+        } else {
+          content = '';
+        }
+      }
+      if (type === 'checkbox' && value) {
+        for (const itm of options) {
+          if (value.includes(itm.value)) content += `${itm.label}`;
+        }
+      }
+      if (type === 'date') {
+        content = (value && moment(value, 'YYYYMMDDHHmmss').format(formart)) || '';
+      }
+      if (type === 'dateRange') {
+        if (value && value.length > 1) {
+          content = `${moment(value[0], 'YYYYMMDDHHmmss').format(formart)} 至 ${moment(
+            value[1],
+            'YYYYMMDDHHmmss',
+          ).format(formart)}`;
+        } else {
+          content = '';
+        }
+      }
+      return content;
     },
   },
 };

@@ -1,6 +1,6 @@
 <template>
   <el-card>
-    <pro-search :items="searchItems" :data-source="info" @search="onSearch">
+    <pro-search :items="searchItems" :data-source="info" @search="onSearch" @clear="clear">
       <template slot="aaa"> aaabbb </template>
     </pro-search>
   </el-card>
@@ -43,6 +43,11 @@ export default {
           prop: 'createDate',
         },
         {
+          type: 'date',
+          label: '更新时间',
+          prop: 'updateDate',
+        },
+        {
           type: 'render',
           label: '时间',
           slot: 'aaa',
@@ -61,6 +66,9 @@ export default {
   },
   methods: {
     onSearch(d) {
+      this.info = d;
+    },
+    clear(d) {
       this.info = d;
     },
   },
