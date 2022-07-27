@@ -6,7 +6,7 @@ function resolve(dir) {
 
 module.exports = {
   productionSourceMap: true,
-  publicPath: '/vue-pro/search/',
+  publicPath: './',
   pages: {
     index: {
       // page 的入口
