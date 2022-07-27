@@ -70,40 +70,51 @@ export default {
       type: Array,
       default: () => [],
     },
+    // 表单表头位置
     labelPosition: {
       type: String,
       default: 'left',
     },
+    // 表单表头宽度
     labelWidth: {
       type: Number,
       default: 90,
     },
+    // 表单宽度
     labelMaxWidth: {
       type: String,
       default: '400px',
     },
+    // 表单大小
     size: {
       type: String,
       default: 'small',
     },
+    // 是否展示切换按钮
     showChangeBtn: {
       type: Boolean,
       default: true,
     },
+    // 主题色
     color: {
       type: String,
       default: '#348fe4',
     },
-  },
-  data() {
-    return {
-      show: true,
-    };
+    show: {
+      type: Boolean,
+      default: true,
+    },
   },
   watch: {
     color: {
       handler(v) {
         document.documentElement.style.setProperty('--pro-search-color', v);
+      },
+      immediate: true,
+    },
+    show: {
+      handler(v) {
+        this.$emit('update:show', v);
       },
       immediate: true,
     },

@@ -1,6 +1,6 @@
 {
   "name": "vue-pro-search",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "vue2",
   "main": "./lib/index.vue",
   "module": "./esm/index.vue",

@@ -1,7 +1,7 @@
 <template>
   <el-card>
     {{ info }}
-    <pro-search :items="searchItems" :data-source="info" @search="onSearch" @clear="clear">
+    <pro-search :items="searchItems" :data-source="info" :show="show" @search="onSearch" @clear="clear">
       <template v-for="(v, i) in renderColumns">
         <div :key="i" :slot="v.slot">
           <el-input v-model="info[v.prop]" size="small" />
@@ -20,7 +20,7 @@ export default {
   data() {
     return {
       info: {},
-      position: '',
+      show: false,
     };
   },
   computed: {
