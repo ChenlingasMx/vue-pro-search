@@ -84,9 +84,11 @@ export default {
   },
   methods: {
     onSearch() {
-      console.log(this.info, 'aaa');
+      console.log('this.info', this.info);
     },
-    clear() {},
+    clear() {
+      this.info = {};
+    },
   },
 };
 </script>
