@@ -15,6 +15,7 @@ jobs:
 
       - run: npm install
       - run: npm run build
+      - run: npm run build:website
 
       - name: Is a tag created auto?
         id: create_tag
@@ -51,3 +52,21 @@ jobs:
         with:
           token: ${{ secrets.NPM_TOKEN }}
           package: ./packages/base/package.json
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./website/build
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
+
+      - name: Deploy to uimjs.github.io
+        uses: peaceiris/actions-gh-pages
+        with:
+          personal_token: ${{ secrets.PERSONAL_TOKEN_UIM }}
+          publish_dir: ./website/build
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
+          publish_branch: master
+          external_repository: uimjs/uimjs.github.io
