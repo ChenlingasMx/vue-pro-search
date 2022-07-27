@@ -1,8 +1,8 @@
 vue-pro-search
 ===
 
-[![Downloads](https://img.shields.io/static/v1?label=Github&message=repo&color=green&style=flat&logo=github)](https://github.com/tsbbjs/vue-monorepo-template)
-[![Build & Deploy](https://github.com/tsbbjs/vue-monorepo-template/actions/workflows/ci.yml/badge.svg)](https://github.com/tsbbjs/vue-monorepo-template/actions/workflows/ci.yml)
+[![Downloads](https://img.shields.io/static/v1?label=Github&message=repo&color=green&style=flat&logo=github)](https://github.com/ChenlingasMx/vue-pro-search)
+[![Build & Deploy](https://github.com/ChenlingasMx/vue-pro-search/actions/workflows/ci.yml/badge.svg)](https://github.com/ChenlingasMx/vue-pro-search/actions/workflows/ci.yml)
 
 简单的 `vue 2` 搜索组件并支持自定义组件。
 

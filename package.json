@@ -1,5 +1,9 @@
 {
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ChenlingasMx/vue-pro-search.git"
+  },
   "scripts": {
     "prepare": "husky install",
     "start": "lerna exec \"npm run serve\" --scope website",

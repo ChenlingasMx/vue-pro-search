@@ -9,6 +9,10 @@
     "lib",
     "esm"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ChenlingasMx/vue-pro-search.git"
+  },
   "keywords": [
     "vue",
     "vue2"

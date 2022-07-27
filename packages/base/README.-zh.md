@@ -1,63 +1,7 @@
 vue-pro-search
 ===
+简单的 `vue 2` 搜索组件并支持自定义组件。
 
-[![Downloads](https://img.shields.io/static/v1?label=Github&message=repo&color=green&style=flat&logo=github)](https://github.com/ChenlingasMx/vue-pro-search)
-[![Build & Deploy](https://github.com/ChenlingasMx/vue-pro-search/actions/workflows/ci.yml/badge.svg)](https://github.com/ChenlingasMx/vue-pro-search/actions/workflows/ci.yml)
-
-simple `vue 2` search component。
-
-### 目录结构
-
-```shell
-.
-├── README.md
-├── lerna.json
-├── package.json
-├── packages             # 放置包的目录
-│   ├── base                # 📦 包 @vue-monorepo-template/base
-│   │   ├── cjs             # 🔄 编译后的 cjs 目录
-│   │   ├── esm             # 🔄 编译后的 esm 目录
-│   │   ├── package.json
-│   │   ├── src             # 包源码目录
-│   │   └── tsconfig.json
-│ 
-├── tsconfig.json
-└── website              # 🐝 包实例测试，网站
-    ├── README.md
-    ├── babel.config.js
-    ├── package.json
-    ├── public
-    ├── src
-    └── vue.config.js
-```
-
-### 开发
-
-1. 安装
-
-```shell
-npm install
-```
-
-2. 安装包和实例中的依赖
-
-```shell
-npm run bootstrap
-```
-
-3. 编译包中代码
-
-```shell
-npm run build        # 编译所有包 📦 代码
-
-npm run watch:base   # 实时编译 📦 @vue-monorepo-template/base
-```
-
-4. 启动 `website` 实例网站
-
-```shell
-npm run start
-```
 ### demo
 ```vue
 <template>
@@ -182,7 +126,3 @@ export default {
 | span         | 非只读模式下,可以通过指定 24 列中每列的宽度来创建基本网格系统 | string                  | '8'    |
 | color     | 主题色                  | Boolean                  | true      |
 | show     | 模式切换                                                      | boolean                 | true      |
-
-### License
-
-Licensed under the MIT License.
