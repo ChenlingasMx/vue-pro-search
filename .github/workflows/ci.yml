@@ -15,6 +15,7 @@ jobs:
 
       - run: npm install
       - run: npm run build
+      - run: npm run bootstrap
       - run: npm run build:website
 
       - name: Is a tag created auto?
