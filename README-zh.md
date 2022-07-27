@@ -1,4 +1,4 @@
-vue-monorepo-template
+vue-pro-search
 ===
 
 [![Downloads](https://img.shields.io/static/v1?label=Github&message=repo&color=green&style=flat&logo=github)](https://github.com/tsbbjs/vue-monorepo-template)
