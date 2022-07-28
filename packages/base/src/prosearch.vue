@@ -112,12 +112,6 @@ export default {
       },
       immediate: true,
     },
-    show: {
-      handler(v) {
-        this.$emit('update:show', v);
-      },
-      immediate: true,
-    },
   },
   computed: {
     getSlots() {
@@ -126,7 +120,7 @@ export default {
   },
   methods: {
     toggle(value) {
-      this.show = value;
+      this.$emit('update:show', value);
     },
     search() {
       this.$emit('search');
