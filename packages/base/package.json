@@ -1,9 +1,9 @@
 {
   "name": "vue-pro-search",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "vue2",
-  "main": "./lib/index.vue",
-  "module": "./esm/index.vue",
+  "main": "./lib/index.js",
+  "module": "./esm/index.js",
   "license": "MIT",
   "files": [
     "lib",
